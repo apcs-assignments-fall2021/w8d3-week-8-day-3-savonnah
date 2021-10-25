@@ -138,7 +138,7 @@ public class Rational
     public boolean isSimplified() {
         Rational new1 = new Rational (this.numerator, this.denominator);
         Rational simpnew1 = Rational.simplify(new1);
-        if (new1 == simpnew1){
+        if (new1.equals(simpnew1)){
             return true;
         }
             return false;
@@ -331,15 +331,25 @@ public class Rational
             this.denominator = this.denominator;
         }
         else{
-            int den = this.numerator/this.denominator;
-            int num = this.numerator-den;
-            this.numerator = num;
-            this.denominator = den;
+            double num = (double)(this.numerator);
+            double den = (double)(this.denominator);
+            double div = num/den;
+            double end = div-(int)(div);
+            double start =div-end;
+
+            if (end>=0.5) {
+                start+=1;
+            }
+            this.numerator = (int)(start);
+            this.denominator = 1;
+        }
+
+
     }
 
 
     }
-}
+
 
 
 
