@@ -261,9 +261,17 @@ public class Rational
     // Rational r = new Rational(3, 8);
     // r.changeToEquivalentFraction(64); // r is now 24/64 (which is equivalent to 3/8)
     public void changeToEquivalentFraction(int newDenominator) {
-        int numdiv = newDenominator/this.denominator;
-        this.numerator = this.numerator*numdiv;
-        this.denominator = newDenominator;
+        if (newDenominator>this.denominator){
+            int numdiv = newDenominator/this.denominator;
+            this.numerator = this.numerator*numdiv;
+            this.denominator = newDenominator;
+        }
+        else{
+            int numdiv = this.denominator/newDenominator;
+            this.numerator = this.numerator/numdiv;
+            this.denominator = newDenominator;
+        }
+
     }
 
     // **********
@@ -274,7 +282,10 @@ public class Rational
     // Rational r = new Rational(-3,4);
     // System.out.println(r.isNegative()) // true
     public boolean isNegative() { 
-        if (this.numerator<0 || this.denominator<0){
+        if (this.numerator<0 && this.denominator<0){
+            return false;
+        }
+        else if(this.numerator<0 || this.denominator<0){
             return true;
         }
         return false;
@@ -313,10 +324,20 @@ public class Rational
     // Rational r = new Rational(3, 2);
     // r.round(); // r is now 2/1
     public void round() {
-        int den = this.numerator/this.denominator;
-        int num = this.numerator-den;
-        this.numerator = num;
-        this.denominator = den;
+        Rational new1 = new Rational (this.numerator, this.denominator);
+        Rational simpnew1 = Rational.simplify(new1);
+        if (new1 == simpnew1){
+            this.numerator = this.numerator;
+            this.denominator = this.denominator;
+        }
+        else{
+            int den = this.numerator/this.denominator;
+            int num = this.numerator-den;
+            this.numerator = num;
+            this.denominator = den;
+    }
+
+
     }
 }
 
